@@ -1,3 +1,9 @@
+0.003   2018-01-08 (PERLANCAR) (unreleased)
+
+        - Rename utility from genpass-wordlist to genpw-wordlist. Now based on
+          App::genpw.
+
+
 0.002   2018-01-02 (PERLANCAR)
 
         - Add option: patterns.
