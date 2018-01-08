@@ -13,7 +13,7 @@ use List::Util qw(shuffle);
 
 our %SPEC;
 
-my $symbols = [split //, q(%^&*()@#$!?+=-_.,<>:;"')];
+my $symbols = [split //, q(~`!@#$%^&*()_-+={}[]|\\:;"'<>,.?/)];
 my $digits = [0..9];
 
 my $default_patterns = [
