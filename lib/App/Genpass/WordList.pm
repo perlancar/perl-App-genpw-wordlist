@@ -16,6 +16,7 @@ our %SPEC;
 my $symbols = [split //, q(~`!@#$%^&*()_-+={}[]|\\:;"'<>,.?/)];
 my $digits = ["0".."9"];
 my $alphanums = ["A".."Z", "a".."z", "0".."9"];
+my $alphanums_symbols = [@$alphanums, @$symbols];
 
 my $default_patterns = [
     '%w %w %w',
@@ -45,6 +46,7 @@ be used as-is. Available conversions:
     %s   Random ASCII symbol, e.g. "-" (dash), "_" (underscore), etc.
     %d   Random digit (0-9).
     %a   Random alphanumeric character (A-Z, a-z, 0-9)
+    %S   Random alphanumeric and symbol (combination of %s and %a)
     %%   A literal percent sign.
 
 _
@@ -67,6 +69,8 @@ sub _fill_conversion {
         return join("", map {$symbols->[rand(@$symbols)]} 1..$len);
     } elsif ($matches->{CONV} eq 'a') {
         return join("", map {$alphanums->[rand(@$alphanums)]} 1..$len);
+    } elsif ($matches->{CONV} eq 'S') {
+        return join("", map {$alphanums_symbols->[rand(@$alphanums_symbols)]} 1..$len);
     } elsif ($matches->{CONV} eq 'w' || $matches->{CONV} eq 'W') {
         die "Ran out of words while trying to fill out conversion '$matches->{all}'" unless @$words;
         my $i = 0;
