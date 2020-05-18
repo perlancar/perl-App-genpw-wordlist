@@ -1,3 +1,8 @@
+0.005   2020-05-18  Released-By: PERLANCAR; Urgency: medium
+
+	- Update to App::wordlist 0.268+ (streaming result).
+
+
 0.004   2018-01-09  Released-By: PERLANCAR
 
 	- Update to App::genpw 0.002.
