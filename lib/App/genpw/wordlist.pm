@@ -63,7 +63,8 @@ sub genpw {
     );
     return $res unless $res->[0] == 200;
 
-    my @words = shuffle @{ $res->[2] };
+    my @words; while (defined(my $word = $res->[2]->())) { push @words, $word }
+    @words = shuffle @words;
     App::genpw::genpw(
         %args,
         patterns => $patterns,
