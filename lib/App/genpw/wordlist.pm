@@ -60,16 +60,19 @@ sub genpw {
     my $wordlists = delete($args{wordlists}) // ['EN::Enable'];
     my $patterns = delete($args{patterns}) // $default_patterns;
 
-    my $res = App::wordlist::wordlist(
-        (wordlists => $wordlists) x !!defined($wordlists),
-        random => 1,
-    );
-    return $res unless $res->[0] == 200;
+    my $res;
+    unless ($args{action} && $args{action} eq 'list-patterns') {
+        $res = App::wordlist::wordlist(
+            (wordlists => $wordlists) x !!defined($wordlists),
+            random => 1,
+        );
+        return $res unless $res->[0] == 200;
+    }
 
     App::genpw::genpw(
         %args,
         patterns => $patterns,
-        _words => $res->[2],
+        ($res ? (_words => $res->[2]) : ()),
     );
 }
 
