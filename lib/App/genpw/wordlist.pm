@@ -1,6 +1,8 @@
 package App::genpw::wordlist;
 
+# AUTHORITY
 # DATE
+# DIST
 # VERSION
 
 use 5.010001;
@@ -60,15 +62,14 @@ sub genpw {
 
     my $res = App::wordlist::wordlist(
         (wordlists => $wordlists) x !!defined($wordlists),
+        random => 1,
     );
     return $res unless $res->[0] == 200;
 
-    my @words; while (defined(my $word = $res->[2]->())) { push @words, $word }
-    @words = shuffle @words;
     App::genpw::genpw(
         %args,
         patterns => $patterns,
-        _words => \@words,
+        _words => $res->[2],
     );
 }
 
