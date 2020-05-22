@@ -6,7 +6,7 @@ package App::genpw::wordlist;
 # VERSION
 
 use 5.010001;
-use strict;
+use strict 'subs', 'vars';
 use warnings;
 
 use App::genpw ();
@@ -60,19 +60,36 @@ sub genpw {
     my $wordlists = delete($args{wordlists}) // ['EN::Enable'];
     my $patterns = delete($args{patterns}) // $default_patterns;
 
-    my $res;
+    my ($words, $wl);
     unless ($args{action} && $args{action} eq 'list-patterns') {
-        $res = App::wordlist::wordlist(
+        # optimize: when there is only one wordlist, pass wordlist object to
+        # App::wordlist so it can use pick() which can be more efficient than
+        # getting all the words first
+        if (@$wordlists == 1) {
+            my $mod = "WordList::$wordlists->[0]";
+            (my $modpm = "$mod.pm") =~ s!::!/!g;
+            require $modpm;
+            if (!${"$mod\::DYNAMIC"}) {
+                $wl = $mod->new;
+                goto GENPW;
+            }
+        }
+
+        my $res = App::wordlist::wordlist(
             (wordlists => $wordlists) x !!defined($wordlists),
             random => 1,
         );
+
         return $res unless $res->[0] == 200;
+        $words = $res->[2];
     }
 
+  GENPW:
     App::genpw::genpw(
         %args,
         patterns => $patterns,
-        ($res ? (_words => $res->[2]) : ()),
+        ($words ? (_words => $words) : ()),
+        ($wl    ? (_wl    => $wl   ) : ()),
     );
 }
 
