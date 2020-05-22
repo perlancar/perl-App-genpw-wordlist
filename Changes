@@ -1,8 +1,7 @@
 0.008   2020-05-22  Released-By: PERLANCAR; Urgency: medium
 
-	- Accept WordList::* object in _wl as an alternative to accepting
-	  words in _words; accepting wordlist object allows more efficient
-	  random-picking.
+	- When there's only a single wordlist, pass the WordList::* object in
+          _wl so App::genpw can random-pick() more efficiently.
 
 
 0.007   2020-05-21  Released-By: PERLANCAR; Urgency: medium
