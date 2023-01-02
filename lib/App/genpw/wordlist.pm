@@ -56,11 +56,19 @@ _
             summary=>'Generate some passwords from the default English (EN::Enable) wordlist',
             argv => [qw/-w ID::KBBI -n8/],
             test => 0,
+            'x.doc.show_result' => 0, # TODO: currently result generation fails with obscure error
         },
         {
             summary=>'Generate some passwords from Indonesian words',
             argv => [qw/-w ID::KBBI -n8/],
             test => 0,
+            'x.doc.show_result' => 0, # TODO: currently result generation fails with obscure error
+        },
+        {
+            summary=>'Generate some passwords with specified pattern (see genpw documentation for details of pattern)',
+            argv => [qw/-w ID::KBBI -n5 -p/, '%w%8$10d-%w%8$10d-%8$10d%w'],
+            test => 0,
+            'x.doc.show_result' => 0, # TODO: currently result generation fails with obscure error
         },
     ],
 };
