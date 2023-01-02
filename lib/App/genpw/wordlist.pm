@@ -1,10 +1,5 @@
 package App::genpw::wordlist;
 
-# AUTHORITY
-# DATE
-# DIST
-# VERSION
-
 use 5.010001;
 use strict 'subs', 'vars';
 use warnings;
@@ -12,6 +7,11 @@ use warnings;
 use App::genpw ();
 use App::wordlist ();
 use List::Util qw(shuffle);
+
+# AUTHORITY
+# DATE
+# DIST
+# VERSION
 
 our %SPEC;
 
@@ -49,9 +49,19 @@ password cracking (e.g. `--s2k-count 65011712` in GnuPG).
 _
     args => {
         %args,
-        %App::wordlist::arg_wordlists,
+        %App::wordlist::argspecopt_wordlists,
     },
     examples => [
+        {
+            summary=>'Generate some passwords from the default English (EN::Enable) wordlist',
+            argv => [qw/-w ID::KBBI -n8/],
+            test => 0,
+        },
+        {
+            summary=>'Generate some passwords from Indonesian words',
+            argv => [qw/-w ID::KBBI -n8/],
+            test => 0,
+        },
     ],
 };
 sub genpw {
