@@ -49,7 +49,16 @@ password cracking (e.g. `--s2k-count 65011712` in GnuPG).
 _
     args => {
         %args,
-        %App::wordlist::argspecopt_wordlists,
+        #%App::wordlist::argspecopt_wordlists,
+        wordlists => {
+            'x.name.is_plural' => 1,
+            'x.name.singular' => 'wordlist',
+            schema => ['array*' => {
+                of => 'perl::wordlist::modname_with_optional_args*', # for the moment we need to use 'str' instead of 'perl::wordlist::modname_with_optional_args' due to Perinci::Sub::GetArgs::Argv limitation
+                'x.perl.coerce_rules'=>[ ['From_str_or_array::expand_perl_modname_wildcard'=>{ns_prefix=>"WordList"}] ],
+            }],
+            cmdline_aliases => {w=>{}},
+        },
     },
     examples => [
         {
